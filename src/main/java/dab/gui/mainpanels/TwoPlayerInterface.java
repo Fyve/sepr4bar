@@ -10,6 +10,7 @@ import dab.bigBunny.HitBoundsController;
 import dab.bigBunny.TwoPlayerScreen;
 import dab.engine.newsim.AbstractSimulator;
 import dab.engine.newsim.TwoPlayerSimulator;
+import dab.engine.simulator.GameOverException;
 import dab.engine.simulator.Simulator;
 import dab.gui.application.MainWindow;
 import dab.gui.auxpanels.ControlPanel;
@@ -40,10 +41,11 @@ public class TwoPlayerInterface extends GameInterface{
     public TwoPlayerInterface(MainWindow mainWindow, TwoPlayerSimulator simulator) {
         super(mainWindow);
         this.simulator = simulator;
+        
         environment = new Environment();
         hitboundsController = new HitBoundsController();
         controller = new BunnyController(environment, hitboundsController, new Point(100, 100));
-        gamePanel = new TwoPlayerScreen(simulator, environment, hitboundsController, controller);
+        gamePanel = new TwoPlayerScreen(simulator, environment, hitboundsController, controller, simulator.getTurbine());
         obamaPanel = new TwoPlayerObama(simulator, controller);
         buttonPanel = new ControlPanel(simulator);
         infoPanel = new InfoPanel(simulator);
@@ -63,11 +65,14 @@ public class TwoPlayerInterface extends GameInterface{
     }
 
     @Override
-    protected void step() {
+    protected void step() throws GameOverException {
         super.step();
         controller.step();
         environment.step();
-        gamePanel.repaint();      
+        gamePanel.repaint();    
+        if (controller.getHealth() <= 0){
+            throw new GameOverException();
+        }
     }
     
      @Override

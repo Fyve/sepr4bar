@@ -2,18 +2,18 @@ package dab.gui.auxpanels;
 
 import dab.engine.newsim.AbstractSimulator;
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Image;
-import javax.swing.BoxLayout;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JSlider;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
-import javax.swing.JToggleButton;
 
 /**
  * The button panel contains the basic reactor controls,
@@ -30,8 +30,9 @@ public class ControlPanel extends JPanel {
 	private JLabel valve1_label;
 	private JLabel valve2_label;
 	private JLabel rods_label;
-    private AbstractSimulator simulator;
-	
+        private AbstractSimulator simulator;
+	private BufferedImage background;
+    
 	/**
 	 * Initialises the ControlPanel to a standard layout.
 	 */
@@ -45,12 +46,15 @@ public class ControlPanel extends JPanel {
         JPanel bottomPanel = new JPanel();
         //JPanel sliderPanel = new JPanel();
         //sliderPanel.setLayout(new BoxLayout(sliderPanel, BoxLayout.Y_AXIS));
+     
         
         topPane.setDividerSize(0);
         buttonPane.setDividerSize(0);
         
+        topPane.setOpaque(false);
         subButtonPanel.setOpaque(false);
         bottomPanel.setOpaque(false);
+        buttonPane.setOpaque(false);
         
 		btnPump2 = new PumpButton(sim.getPump(2), "Coolant Pump");
         subButtonPanel.add(btnPump2);  
@@ -79,6 +83,12 @@ public class ControlPanel extends JPanel {
         
        add(topPane);
 		
+        try {
+            background = ImageIO.read(new File("src/main/resources/dab/gui/panel.png"));
+        } catch (Exception e) {
+            System.err.println("Image not found");
+        }
+       
 	}
     
     public void update() {
@@ -90,10 +100,11 @@ public class ControlPanel extends JPanel {
     }
 	
 	@Override
-    public void paintComponent(Graphics g) {
+        public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Image img = new ImageIcon("resources/bckgroundBLUE.png").getImage();
-        g.drawImage(img, 0, 0, 600, 600,  null);
+       // Image img = new ImageIcon("src/main/resources/dab/gui/panel.png").getImage();
+         Graphics2D g2D = (Graphics2D) g;
+        g2D.drawImage(background, 0, 0, this.getWidth(), this.getHeight(),  null);
 
     }
 }

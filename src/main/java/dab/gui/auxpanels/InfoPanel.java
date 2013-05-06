@@ -1,6 +1,7 @@
 package dab.gui.auxpanels;
 
 import dab.engine.newsim.AbstractSimulator;
+import dab.engine.simulator.FailMode;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -38,7 +39,7 @@ public class InfoPanel extends JPanel {
 
         screenText.setBackground(Color.BLACK);
 
-        screenText.setBorder(BorderFactory.createMatteBorder(25, 25, 18, 18, new ImageIcon("resources/bckgroundBLUE.png")));
+        screenText.setBorder(BorderFactory.createMatteBorder(25, 25, 18, 18, new ImageIcon("src/main/resources/dab/gui/panel.png")));
 
         screenText.setOpaque(true);
         screenText.setHorizontalAlignment(SwingConstants.CENTER);
@@ -48,21 +49,24 @@ public class InfoPanel extends JPanel {
     }
 
     public void update() {
-        screenText.setText(
-                "<html>Control Rod Position " + simulator.controlRodPosition().toString() + "<br>" 
-                + "<br>" + 
-                "R Water Level " + simulator.reactorWaterLevel() + "<br>" + 
-                "R Temperature " + simulator.reactorTemperature() + "<br>" + 
-                "R Core temperature" + simulator.getReactor().coreTemperature() + "<br>" +
-                "R Pressure " + simulator.reactorPressure() + "<br>" + 
-                "R Bottom Pressure" + (int)simulator.getReactor().getBottomPressure() + "<br>" +
-                "R Water mass" + (int)(simulator.getReactor().getWaterMass() * 10)+ "<br>" + "<br>" +
-                
-                "C Water Level " + simulator.condenserWaterLevel() + "<br>" + 
-                "C Temperature " + simulator.condenserTemperature() + "<br>" + 
-                "C Pressure " + simulator.condenserPressure()+ "<br>" +
-                "C Bottom Pressure" + (int)simulator.getCondenser().getBottomPressure() + "<br>"+
-                "C Water Mass" + (int)(simulator.getCondenser().getWaterMass() * 10) + "<br>" +
-                "ENERGY GENERATED " + simulator.energyGenerated() + "</html>");
+        if (simulator.getSoftwareStatus() != FailMode.WORKING) {
+            screenText.setText("DI9087W43JLSD[]");
+        } else {
+            screenText.setText(
+                    "<html>Control Rod Position " + simulator.controlRodPosition().toString() + "<br>"
+                    + "<br>"
+                    + "R Water Level " + simulator.reactorWaterLevel() + "<br>"
+                    + "R Temperature " + simulator.reactorTemperature() + "<br>"
+                    + "R Core temperature" + simulator.getReactor().coreTemperature() + "<br>"
+                    + "R Pressure " + simulator.reactorPressure() + "<br>"
+                    + "R Bottom Pressure" + (int) simulator.getReactor().getBottomPressure() + "<br>"
+                    + "R Water mass" + (int) (simulator.getReactor().getWaterMass() * 10) + "<br>" + "<br>"
+                    + "C Water Level " + simulator.condenserWaterLevel() + "<br>"
+                    + "C Temperature " + simulator.condenserTemperature() + "<br>"
+                    + "C Pressure " + simulator.condenserPressure() + "<br>"
+                    + "C Bottom Pressure" + (int) simulator.getCondenser().getBottomPressure() + "<br>"
+                    + "C Water Mass" + (int) (simulator.getCondenser().getWaterMass() * 10) + "<br>"
+                    + "ENERGY GENERATED " + simulator.energyGenerated() + "</html>");
+        }
     }
 }

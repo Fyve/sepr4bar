@@ -17,7 +17,7 @@ import dab.engine.newsim.utils.Matter;
 public class Turbine extends FailableComponent implements TurbineView {
     
     double totalEnergyGenerated;
-    double energyGeneratedLast;
+    double energyGeneratedLast;    
     
     public Turbine(String name) {
         super(name);
@@ -60,6 +60,11 @@ public class Turbine extends FailableComponent implements TurbineView {
     @Override
     public double outputPower() {
         return totalEnergyGenerated;
+    }
+
+    @Override
+    public void reducePower( double gunshotReduction) {
+        totalEnergyGenerated -= gunshotReduction;
     }
 
 }

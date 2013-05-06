@@ -30,17 +30,16 @@ public class GameOverMenu extends MenuHandler implements KeyListener{
     
     public GameOverMenu(MainWindow mw, final JLayeredPane invoker,boolean playerOneMode, boolean playerTwoLost, String power){
       super(invoker);
-        this.mainWindow = mw; 
+      this.mainWindow = mw; 
       this.invoker = invoker;
         
        setLayout(new BoxLayout(this,BoxLayout.X_AXIS)); 
         
         this.playerTwoLost  = playerTwoLost; 
         if(playerTwoLost) {
-            ///Use the one for dying bunny!!!!!!!!
-            icon = new ImageIcon("resources/endGame.gif");
+            icon = new ImageIcon("src/main/resources/dab/gui/deadBunny.png");
         } else {          
-            icon = new ImageIcon("resources/endGame.gif");   
+            icon = new ImageIcon("src/main/resources/dab/gui/endGame.gif");   
         }
        
         Image img = icon.getImage();
@@ -70,6 +69,7 @@ public class GameOverMenu extends MenuHandler implements KeyListener{
        
         add(forTheText, BorderLayout.EAST);
          setBounds(200, 200, 600, 300);
+         
     }
 
     @Override

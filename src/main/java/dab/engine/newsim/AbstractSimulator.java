@@ -21,9 +21,11 @@ import dab.engine.newsim.interfaces.PumpView;
 import dab.engine.newsim.interfaces.ReactorView;
 import dab.engine.newsim.interfaces.TurbineView;
 import dab.engine.newsim.interfaces.ValveView;
+import dab.engine.simulator.FailMode;
 import dab.engine.simulator.GameOverException;
 
 import dab.engine.simulator.SoftFailReport;
+import dab.engine.simulator.UserCommands;
 
 
 /**
@@ -196,8 +198,12 @@ public abstract class AbstractSimulator {
      *
      * @return Software failures report
      */
-    public SoftFailReport getSoftFailReport(){
-        return getFailureModel().getSoftFailReport();
+    public SoftFailReport getSoftFailReport(UserCommands targetCommand, double targetParameter) {
+        return getFailureModel().generateSoftwareReport(targetCommand, targetParameter);
+    }
+    
+    public FailMode getSoftwareStatus() {
+        return getFailureModel().getSoftwareFailureMode();
     }
     
     public void setDifficulty(int i){

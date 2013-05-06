@@ -5,6 +5,7 @@
 package dab.gui.auxpanels;
 
 import dab.engine.newsim.SinglePlayerSimulator;
+import dab.engine.simulator.FailMode;
 import dab.gui.mainpanels.GameInterface;
 
 /**
@@ -44,7 +45,7 @@ public class SinglePlayerObama extends ObamaPanel {
             }
         }*/
 
-        if (!simulator.getSoftFailReport().getFailBool()) {
+        if (simulator.getSoftwareStatus() != FailMode.WORKING) {
             temp += "WARNING, " + simulator.getUsername() + ": A software failure has occured!";
         }
         temp += "</html>";

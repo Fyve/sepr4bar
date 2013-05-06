@@ -4,6 +4,10 @@
  */
 package dab.engine.newsim;
 
+import dab.bigBunny.Environment;
+import dab.engine.simulator.FailMode;
+import dab.engine.simulator.GameOverException;
+import dab.engine.simulator.SoftFailReport;
 import dab.engine.simulator.UserCommands;
 
 /**
@@ -18,26 +22,42 @@ public class DualPlayerFailureModel extends FailureModel {
     //in two player mode failures have about 3 times less chance to occur randomly
     private final static double DEFAULT_FAIL_CHANCE = 1 / 1500;
     
+    Environment environment = null;
+    
     public DualPlayerFailureModel(PowerPlant plant) {
         super(plant);
         setDamagesToComponents(MAX_DAMAGE_DUAL, DAMAGE_INCREASE_DUAL);
     }
     
+    // link up with an environment
+    public void setEnvironment(Environment env) {
+        if (environment != null) {
+            throw new RuntimeException("Can not set environment more than once!");
+        } else {
+            this.environment = env;
+        }
+    } 
+    
     @Override
-    protected double getHardwareFailChance() {
-        return getDifficultyModifier() * DEFAULT_FAIL_CHANCE;
+    public void step() throws GameOverException {
+        if (environment == null) {
+            throw new RuntimeException("Environment must be set before starting DualPlayerMode");
+        } else {
+            super.step();
+        }
     }
 
     @Override
-    public boolean softFailCheck(UserCommands targetCommand, double targetParameter) {
-        //Check if the bunny has initiated a SF from Bunnys' environment
-           /*
-            if(environment.getSoftwareFailure) {
-                return false;
-            } else {
-                
-            }
-            */
-            return true;
+    protected FailMode getSoftwareFailureMode() {
+        if (environment.getSoftwareFailure()) {
+            return FailMode.UNRESPONSIVE;
+        } else {
+            return FailMode.WORKING;
+        }
+    }
+
+    @Override
+    public SoftFailReport generateSoftwareReport(UserCommands targetCommand, double targetParameter) {
+        return new SoftFailReport(getSoftwareFailureMode(), targetCommand, targetParameter);
     }
 }

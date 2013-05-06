@@ -35,7 +35,7 @@ public class Options extends MenuHandler{
         easy = new JToggleButton();
         easy.setSelectedIcon(new ImageIcon("src/main/resources/dab/gui/Buttons/easy.png"));
         easy.setIcon(new ImageIcon("src/main/resources/dab/gui/Buttons/easyOff.png"));
-        easy.setBackground(Color.black);
+        easy.setBackground(Color.BLACK);
         
         normal = new JToggleButton();
         normal.setSelectedIcon(new ImageIcon("src/main/resources/dab/gui/Buttons/normal.png"));
@@ -76,8 +76,8 @@ public class Options extends MenuHandler{
         });
         
         JToggleButton sound = new JToggleButton();
-        sound.setSelectedIcon(new ImageIcon("src/main/resources/dab/gui/Buttons/easy.png"));
-        sound.setIcon(new ImageIcon("src/main/resources/dab/gui/Buttons/easyOff.png"));
+        sound.setSelectedIcon(new ImageIcon("src/main/resources/dab/gui/Buttons/music.png"));
+        sound.setIcon(new ImageIcon("src/main/resources/dab/gui/Buttons/musicOff.png"));
         sound.setBackground(Color.black);
         sound.setSelected(mainWindow.getMusic());
         sound.addActionListener(new ActionListener() {
@@ -89,6 +89,7 @@ public class Options extends MenuHandler{
         });
            
         JButton help = new JButton(new ImageIcon("src/main/resources/dab/gui/Buttons/help.png"));
+         help.setBackground(Color.black);
          help.addActionListener(new ActionListener() {
 
             @Override
@@ -97,7 +98,8 @@ public class Options extends MenuHandler{
             }
         });
          
-        JButton back = new JButton("back");
+        JButton back = new JButton(new ImageIcon("src/main/resources/dab/gui/Buttons/back.png"));
+        back.setBackground(Color.black);
         back.addActionListener(new ActionListener() {
 
             @Override
@@ -113,7 +115,8 @@ public class Options extends MenuHandler{
       add(sound);
       add(back);
      
-      setBounds(400, 200, (int)easy.getMinimumSize().getWidth(), (int)easy.getMinimumSize().getHeight()*getComponentCount());
+        setBounds(getTheX(), 100, (int)easy.getMinimumSize().getWidth(), 
+                (int)easy.getMinimumSize().getHeight()*getComponentCount());
      }
       
     private void setSelected(){

@@ -24,18 +24,7 @@ public abstract class ObamaPanel extends JPanel {
 
     public ObamaPanel() {
         setBackground(Color.WHITE);
-        setLayout(null);
-        lblObama = new JLabel();
-        lblObama.setFont(new Font("Bookman Old Style", Font.BOLD, 14));
-        lblObama.setForeground(Color.BLACK);
-        lblObama.setVerticalAlignment(SwingConstants.TOP);
-        lblObama.setBounds(0, -5, 657, 154);
-        lblObama.setBackground(Color.WHITE);
-        lblObama.setIcon(new ImageIcon("resources/mainInterface/littleObama.png"));
-        lblObama.setHorizontalAlignment(SwingConstants.LEFT);
-        lblObama.setHorizontalTextPosition(SwingConstants.RIGHT);
-        add(lblObama);
-        
+        setLayout(null);        
 
         lblWords = new JLabel();
         lblWords.setFont(new Font("Bookman Old Style", Font.BOLD, 14));
@@ -48,9 +37,9 @@ public abstract class ObamaPanel extends JPanel {
 
         lblSpeech = new JLabel();
         lblSpeech.setFont(new Font("Bookman Old Style", Font.BOLD, 14));
-        lblSpeech.setBounds(0, -90, 1000, 300);
+        lblSpeech.setBounds(0, -80, 1000, 300);
         lblSpeech.setIconTextGap(50);
-        lblSpeech.setIcon(new ImageIcon("resources/mainInterface/ObamaSpeechBubble.png"));
+        lblSpeech.setIcon(new ImageIcon("src/main/resources/dab/gui/auxpanels/speech.png"));
         add(lblSpeech);
     }
 

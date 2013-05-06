@@ -10,4 +10,5 @@ package dab.engine.newsim.interfaces;
  */
 public interface TurbineView extends FailableComponentView {
     public double outputPower();
+    public void reducePower(double gunshotReduction);
 }

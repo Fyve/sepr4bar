@@ -47,8 +47,8 @@ public class DaIntro extends JPanel {
 
         
         story = new StoryReader("WelcomeStory.txt");
-        story.rotateX(Math.PI / 8);
-        story.move(250, 500, -500);
+        story.rotateX(Math.PI / 9);
+        story.move(-200, 500, -500);
         try {
             // load background raw img
             BufferedImage tempImg = ImageIO.read(DaIntro.class.getResourceAsStream("intro_bkg.png"));
@@ -61,7 +61,7 @@ public class DaIntro extends JPanel {
         }
         
                 
-        setupSpaceKeyListener();
+        setupEnterKeyListener();
         setupTimer();
         
         animator.setInitialDelay(300);
@@ -69,7 +69,7 @@ public class DaIntro extends JPanel {
 
     }
  
-    private void setupSpaceKeyListener() {
+    private void setupEnterKeyListener() {
 
         // register a space press listener
         AbstractAction stopper = new AbstractAction() {
@@ -78,7 +78,7 @@ public class DaIntro extends JPanel {
                 stop();
             }
         };        
-        getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "stop");
+        getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "stop");
         getActionMap().put("stop", stopper);
     }
 
@@ -99,8 +99,8 @@ public class DaIntro extends JPanel {
         Graphics gBackgnd = temp.getGraphics();
         gBackgnd.drawImage(rawImg, 0, 0, null); // raw image does not have scaling (I think TODO: investigate)
         gBackgnd.setFont(new Font("Arial", Font.PLAIN, 25));
-        gBackgnd.setColor(Color.PINK);
-        gBackgnd.drawString("Press space to continue...",
+        gBackgnd.setColor(Color.WHITE);
+        gBackgnd.drawString("Press ENTER to continue...",
                 rawImg.getWidth() / 2, /* mid point */
                 rawImg.getHeight() - 50 - gBackgnd.getFontMetrics().getHeight()); /* 100 pixels from the bottom */
         gBackgnd.dispose();
@@ -118,15 +118,14 @@ public class DaIntro extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         int bgApparentWidth = (int)(getHeight() * aspectRatio);
-        int midX = (getWidth() / 2);
+        int midX = (getWidth() / 2) - 500;
         
         // background is black
         g.setColor(Color.black);
         g.fillRect(0, 0, getWidth(), getHeight());
         
         // proper setup of background img (maintains aspect ratio)
-        g.drawImage(background, midX - bgApparentWidth / 2, 0, bgApparentWidth, getHeight(), null);
-        
+        g.drawImage(background, getWidth() - bgApparentWidth, 0, bgApparentWidth, getHeight(), null);
         draw3DPixels(g);
     }
     

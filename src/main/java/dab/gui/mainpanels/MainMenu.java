@@ -4,8 +4,8 @@
  */
 package dab.gui.mainpanels;
 
-import dab.engine.newsim.SinglePlayerSimulator;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import dab.engine.newsim.SinglePlayerSimulator;
 import dab.engine.persistence.FileSystem;
 import dab.gui.application.MainWindow;
 import java.awt.Color;
@@ -23,7 +23,6 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
-import javax.swing.border.LineBorder;
 
 /**
  *
@@ -107,8 +106,7 @@ public class MainMenu extends MenuHandler{
                     final JPopupMenu popupMenu = new JPopupMenu();
 
                     popupMenu.setBorder(BorderFactory.createEmptyBorder());
-                    JButton load = new JButton(new ImageIcon("src/main/resources/dab/gui/Buttons/load.png"));
-                    load.setBackground(Color.black);
+                    JButton load = new JButton("load");
                     load.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -181,15 +179,25 @@ public class MainMenu extends MenuHandler{
         if (addSave) {
             add(save_menu);
         }
-        add(options);
         add(load_menu);
+        add(options);      
         add(quit);
-        
-        int yLocation = 200;
-        if(getComponentCount()>6) { yLocation -= 100;}
-        setBounds(400, yLocation, (int)one_player.getMinimumSize().getWidth(),
+              
+        //different coorditations for buttons depending on whether they are used in the 
+        //game, or start menu (different alignment and different amount of buttons)
+        int h;
+        if(getComponentCount() >5){
+            h = 40;
+        } else {
+            h=150;
+        }
+        if(invoker instanceof DaMMenu) {           
+            setBounds(getTheX(), h, (int)one_player.getMinimumSize().getWidth(),
                 (int)one_player.getMinimumSize().getHeight()*getComponentCount());
-        
+        } else {
+            setBounds(getTheX(), h, (int)one_player.getMinimumSize().getWidth(),
+                (int)one_player.getMinimumSize().getHeight()*getComponentCount());
+        }       
     }
     
     private void startGame(boolean playerMode){

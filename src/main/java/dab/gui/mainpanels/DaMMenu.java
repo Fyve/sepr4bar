@@ -19,13 +19,15 @@ public class DaMMenu extends JLayeredPane {
     private MainMenu mainMenu;
     private MainWindow mw;
     private BufferedImage background;
+    private double aspectRatio;
     
     
     public DaMMenu(MainWindow mw) {        
         this.mw = mw;
         
         try {
-            background = ImageIO.read(new File("src/main/resources/dab/gui/intro/intro_bkg.png"));
+            background = ImageIO.read(new File("src/main/resources/dab/gui/intro/intro_bkg2.png"));
+            aspectRatio = (double)background.getWidth() / (double)background.getHeight();
         } catch (Exception e) {
             System.err.println("Image not found");
         }
@@ -38,10 +40,11 @@ public class DaMMenu extends JLayeredPane {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        int bgApparentWidth = (int)(getHeight() * aspectRatio);
         Graphics2D g2D = (Graphics2D) g;
         g.setColor(Color.black);
         g.fillRect(0, 0, getWidth(), getHeight());
-        g2D.drawImage(background,600,0,background.getWidth(),background.getHeight(),this);
+        g.drawImage(background, getWidth() - bgApparentWidth, 0, bgApparentWidth, getHeight(), null);
     }
     
 }

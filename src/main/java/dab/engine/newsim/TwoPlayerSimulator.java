@@ -4,6 +4,9 @@
  */
 package dab.engine.newsim;
 
+import dab.bigBunny.Environment;
+import dab.engine.simulator.GameOverException;
+
 /**
  *
  * @author eduard
@@ -14,15 +17,19 @@ public class TwoPlayerSimulator extends AbstractSimulator {
     
     public TwoPlayerSimulator() {
         super();
-        failureModel = new DualPlayerFailureModel(powerPlant);
         firstPlayerName = "";
         secondPlayerName = "";
+        failureModel = new DualPlayerFailureModel(powerPlant);
     }
     
     public TwoPlayerSimulator(String name1, String name2) {
         this();
         this.firstPlayerName = name1;
         this.secondPlayerName = name2;
+    }
+
+    public void setEnvironment(Environment env) {
+        failureModel.setEnvironment(env);
     }
     
     public void setUsername1(String name) {

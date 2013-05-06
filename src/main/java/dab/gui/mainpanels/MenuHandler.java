@@ -25,4 +25,12 @@ public abstract class MenuHandler extends JPanel{
     public JLayeredPane getInvoker(){
         return invoker;
     }
+    
+    public int getTheX(){
+        if(invoker instanceof DaMMenu){
+            return 50;
+        } else {
+            return 400;
+        }
+    }
 }

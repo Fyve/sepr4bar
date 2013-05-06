@@ -72,22 +72,22 @@ public class Reactor extends Container implements ReactorView {
         return (v1 * p1 + v2 * p2) / (v1 + v2);
     }
     
-        private void condenseSteam() {
-            // if pressure is smaller than atmosferic one, then we don't condense anything,
-            // otherwise we condense such that we reach the boiling point at that pressure
-            if (getPressure()> Constants.ATMOSPHERIC_PRESSURE) {
-                double boilingPoint = Water.getBoilingTemperature(getPressure());
-                if (boilingPoint > steam.getTemperature()) { // remove steam such that it equalizes to the boiling point
-                    double newSteamPressure = Math.max(Water.getBoilingPressure(steam.getTemperature()), Constants.ATMOSPHERIC_PRESSURE);
-                    
+    private void condenseSteam() {
+        // if pressure is smaller than atmosferic one, then we don't condense anything,
+        // otherwise we condense such that we reach the boiling point at that pressure
+        if (getPressure() > Constants.ATMOSPHERIC_PRESSURE) {
+            double boilingPoint = Water.getBoilingTemperature(getPressure() * 0.98);
+            if (boilingPoint > steam.getTemperature()) { // remove steam such that it equalizes to the boiling point
+                double newSteamPressure = Math.max(Water.getBoilingPressure(steam.getTemperature()), Constants.ATMOSPHERIC_PRESSURE);
 
-                    int newQuantity = steam.getParticlesAtState(newSteamPressure, getCompressibleVolume());
-                    int deltaQuantity = steam.getParticleNr() - newQuantity;
-                    System.out.println("Condensed in reactor " + deltaQuantity);
-                    steam.remove(deltaQuantity);
-                    getWater().add(new Water(steam.getTemperature(), deltaQuantity));
-                }
-            }        
+
+                int newQuantity = steam.getParticlesAtState(newSteamPressure, getCompressibleVolume());
+                int deltaQuantity = steam.getParticleNr() - newQuantity;
+                System.out.println("Condensed in reactor " + deltaQuantity);
+                steam.remove(deltaQuantity);
+                getWater().add(new Water(steam.getTemperature(), deltaQuantity));
+            }
+        }
     }
     
     private Ratio getCoreSubmersedLevel() {

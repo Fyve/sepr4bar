@@ -10,4 +10,7 @@ package dab.engine.simulator.views;
  */
 public interface TurbineView extends FailableComponentView {
     public double outputPower();
+    
 }
+
+
